@@ -4,7 +4,7 @@ const initialState = {
     pokemon: [],
 }
 
-function PokemonReducer (state = initialState, action) {
+function PokemonReducer(state = initialState, action: any) {
     switch (action.type) {
         case POKEMON:
             return {

@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/store/store"
 
 
 export default function Page() {
-    const pokemon = useSelector((state:any) => {
+    const pokemon = useSelector((state: any) => {
         return state.PokemonReducer.pokemon
     })
     const dispatch = useAppDispatch()

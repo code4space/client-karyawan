@@ -13,11 +13,12 @@ const store = createStore(
     rootReducer,
     applyMiddleware(logger, thunk as ThunkAction)
 );
+export default store;
+
 
 type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch
 
-export default store;
 
 
 
