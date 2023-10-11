@@ -13,6 +13,7 @@ import axios from 'axios';
 import { baseUrl, baseUrl1 } from '@/constant/url';
 import { getCookie } from '@/components/cookie';
 import { swalError, swalTopEnd } from '@/components/swal';
+import Image from "next/image";
 
 
 export default function Page() {
@@ -55,7 +56,7 @@ export default function Page() {
         return () => {
             newSocket.disconnect();
         }
-    }, [])
+    }, [dispatch])
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -92,7 +93,7 @@ export default function Page() {
     return (
         <div className="profile-container">
             <div className="card-box">
-                <img src={`${baseUrl}/${userInfo.image}`} alt="profile" />
+                <Image src={`${baseUrl}/${userInfo.image}`} alt="profile" />
                 <p className="name">{userInfo.name}</p>
                 <p className="position">{userInfo.position}</p>
                 <div className="other-info">

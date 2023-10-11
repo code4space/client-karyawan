@@ -6,7 +6,7 @@ interface AnimationSetting {
     [key: string]: object
 }
 
-export default function error({ error, reset }: { error: Error, reset: () => void }) {
+export default function Error({ error, reset }: { error: Error, reset: () => void }) {
     const animationSetting: AnimationSetting = {
         1: { '--err-duration': '2.5s', '--err-delay': '0s' },
         2: { '--err-duration': '2s', '--err-delay': '0.5s' },

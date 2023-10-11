@@ -46,7 +46,7 @@ export default function Page() {
 
     useEffect(() => {
         dispatch(getUser())
-    }, [])
+    }, [dispatch])
 
     if (!absenData || absenMasuk === null) return <Loading />
     return (

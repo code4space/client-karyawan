@@ -33,7 +33,7 @@ export default function Page() {
 
     useEffect(() => {
         dispatch(getUser(1))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (date.from.length > 0 && date.to.length > 0) {
@@ -45,7 +45,7 @@ export default function Page() {
                 swalErrorWithMessage("to date must be more than from")
             } else dispatch(getUser(1, date.from, date.to))
         }
-    }, [date.from, date.to])
+    }, [date.from, date.to, dispatch])
 
     function dateFormat(dateStr: string): string {
         const dateTime = new Date(dateStr)
@@ -99,7 +99,7 @@ export default function Page() {
                     {totalPage > 5 ?
                         <>
                             {[...Array(totalPage - 4 >= activePage ? 3 : 5)].map((_, i) => {
-                                if (activePage >= totalPage - 4) return <span onClick={() => changePage(totalPage - 4 + i)} className={totalPage - 4 + i === activePage ? 'active-page' : ''} key={i}>{totalPage - 4 + i}</span>
+                                if (activePage >= totalPage - 4) return <span key={i} onClick={() => changePage(totalPage - 4 + i)} className={totalPage - 4 + i === activePage ? 'active-page' : ''}>{totalPage - 4 + i}</span>
                                 else if (activePage > 1) return <span onClick={() => changePage(activePage - 1 + i)} className={activePage - 1 + i === activePage ? 'active-page' : ''} key={i}>{activePage - 1 + i}</span>
                                 else return <span key={i} onClick={() => changePage(i + 1)} className={i + 1 === activePage ? 'active-page' : ''}>{i + 1}</span>
                             })}
