@@ -12,8 +12,6 @@ import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
-import Face6Icon from '@mui/icons-material/Face6';
 import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { useEffect, useState } from "react";
@@ -71,7 +69,7 @@ export default function Navigation({ children }) {
 
     useEffect(() => {
         const handleResize = () => {
-            const isMobileDevice = window.innerWidth <= 900; // Set the breakpoint for mobile devices
+            const isMobileDevice = window.innerWidth <= 800; // Set the breakpoint for mobile devices
             setIsMobile(isMobileDevice);
         };
 
@@ -92,7 +90,7 @@ export default function Navigation({ children }) {
     }
 
     function logout() {
-        // localStorage.clear()
+        document.cookie = "access_token=; max-age=0; path=/";
         router.push('/login')
     }
 
@@ -142,7 +140,7 @@ export default function Navigation({ children }) {
                     </div>
                 </div>
             </div>
-            {(isMobile && !isMinimize) ? <div className="bg-blur"></div> : null}
+            {(isMobile && !isMinimize) ? <div className="bg-blur" onClick={() => setMinimize(true)}></div> : null}
 
             <div className={isMinimize || isMobile ? "container minimize" : "container"}>
                 <div className={isMinimize || isMobile ? "top-navigation minimize" : "top-navigation"}>
@@ -152,7 +150,7 @@ export default function Navigation({ children }) {
                         onClick={() => setMinimize(!isMinimize)}>{isMinimize && !isHovered ? <MenuOutlinedIcon /> : <ChevronLeftOutlinedIcon />}</span>
                     <div className="introduction">
                         <h2>Welcome<CelebrationIcon /></h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, reiciendis!</p>
+                        <p>Aplikasi absensi karyawan</p>
                     </div>
                     <div className="right-nav">
                         <NotificationsNoneIcon />

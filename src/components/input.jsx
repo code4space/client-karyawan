@@ -21,7 +21,7 @@ function passwordStrengthParameter(password) {
     }
 }
 
-export function PasswordInput({ state, setState, value, placeHolder, strength }) {
+export function PasswordInput({ state, setState, value, placeHolder, strength, required=true }) {
     const [isHide, setIsHide] = useState(true)
     const [password, setPassword] = useState({ desc: '', color: '' })
     function handleIsHide() {
@@ -42,7 +42,7 @@ export function PasswordInput({ state, setState, value, placeHolder, strength })
 
     return (
         <div className='inputBox'>
-            <input type={isHide ? 'password' : 'text'} required value={value ? state[value] : state} onChange={handleChangeState} />
+            <input type={isHide ? 'password' : 'text'} required={required} value={value ? state[value] : state} onChange={handleChangeState} />
             <label>{placeHolder}</label>
             {strength && <p style={{ border: `1px solid ${password.color}`, color: password.color }} className='strength'>{password.status}</p>}
             {isHide ?
@@ -110,12 +110,13 @@ export function Textarea({ readOnly = false, state, setState, value, placeHolder
     )
 }
 
-export function InputFile({ state, setState, value }) {
+export function InputFile({ state, setState, value, required=true }) {
     const handleChangeState = (event) => {
         const file = event.target.files[0];
 
         if (file && file.type.startsWith('image/')) {
-            setState(file);
+            if (!value) setState(file)
+            else setState({ ...state, [value]: file })
         }
     };
 
@@ -123,9 +124,10 @@ export function InputFile({ state, setState, value }) {
         <div className="inputBox">
             <input
                 type="file"
-                accept="image/*"
+                accept="image/png, image/jpeg"
                 onChange={handleChangeState}
-                required
+                placeholder='Image file'
+                required={required}
             />
         </div>
     );

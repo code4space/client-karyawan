@@ -1,7 +1,7 @@
 .navigation-container {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
 }
 
 .side-navigation {
@@ -20,6 +20,9 @@
 .side-navigation.mobile {
   position: absolute;
   z-index: 10;
+}
+
+.side-navigation.mobile {
 }
 
 .bg-blur {
@@ -193,6 +196,7 @@
 .introduction p {
   font-size: 13px;
   color: var(--gray1);
+  text-align: center;
 }
 
 .minimize.top-navigation span {
@@ -254,4 +258,6 @@
   width: 100%;
   padding: 10px 30px;
   overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 }
