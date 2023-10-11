@@ -1,4 +1,5 @@
 "use client"
+import { io } from "socket.io-client";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,14 +10,16 @@ import { UserState } from '@/store/reducers/user';
 import { getUser } from '@/store/actions/fetchUser';
 import Loading from '@/components/loading';
 import axios from 'axios';
-import { baseUrl } from '@/constant/url';
+import { baseUrl, baseUrl1 } from '@/constant/url';
 import { getCookie } from '@/components/cookie';
 import { swalError, swalTopEnd } from '@/components/swal';
+
 
 export default function Page() {
     const dispatch = useDispatch();
     const user: any = useSelector((state: UserState) => state.UserReducer.user);
 
+    const [socket, setSocket] = useState<any>(null);
     const [openModal, setOpenModal] = useState(false)
     const [userInfo, setUserInfo] = useState<any>({
         email: 'email@yahoo.com',
@@ -28,7 +31,8 @@ export default function Page() {
     })
 
     useEffect(() => {
-        const formData = new FormData();
+        const newSocket = io(baseUrl, { transports: ['websocket'] });
+        setSocket(newSocket);
         async function fetchData() {
             dispatch(getUser(1))
             const response: any = await axios({
@@ -47,6 +51,10 @@ export default function Page() {
             })
         }
         fetchData()
+
+        return () => {
+            newSocket.disconnect();
+        }
     }, [])
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -67,6 +75,14 @@ export default function Page() {
                 dispatch(getUser())
                 setOpenModal(false)
             })
+            await axios({
+                url: `${baseUrl1}/logger`,
+                method: 'POST',
+                headers: { access_token: getCookie("access_token") },
+                data: { description: `User dengan nama ${user.name} telah mengganti profile` }
+            })
+            socket.emit("notification", { message: `${user.name} telah mengganti profile` })
+
         } catch (error) {
             swalError(error);
         }
